@@ -6,8 +6,6 @@ import android.util.Log
 import android.widget.TextView
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
-import retrofit2.Call
-import retrofit2.Retrofit
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,12 +16,16 @@ class MainActivity : AppCompatActivity() {
 
 
        setContentView(R.layout.activity_main)
+        val textView :TextView = findViewById(R.id.myTextView)
 
-        val windyLiveData: LiveData<List<WebcamItem>> = WindyFetcher().fetchContents()
-        windyLiveData.observe(
+
+        val aqiLiveData: LiveData<String> = AqiFetcher().fetchContents()
+        aqiLiveData.observe(
             this,
-            Observer { webcamItems ->
-                Log.d("WindyResponseInMainActivity", "Response received: $webcamItems")
+            Observer { str ->
+                Log.d("AQIResponseInMainActivity", "Response received: $str")
+
+                textView.text = str
             })
     }
 
